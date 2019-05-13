@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>v-if指令</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+</head>
+<body>
+<div id="box" v-cloak>
+
+  <h1 v-show="false">hello world</h1>
+  <h1 v-if="true">hello</h1>
+
+  <!--
+    v-if指令：控制元素的显示和隐藏
+
+      语法：v-if = 表达式
+        如果表达式的结果为true，元素显示
+        如果表达式的结果为false，元素隐藏
+
+      原理：如果表达式的结果为 false，元素隐藏式因为元素没有被渲染到页面中
+
+    v-show指令：控制一个元素的显示和隐藏
+
+      语法：v-show = 表达式
+
+      原理：通过控制元素的 display 属性来控制一个元素的显示和隐藏(none/block)
+
+    实现效果相近的方法：
+      表达式：相当于字符串拼接的效果
+      v-text：相当于innerHTML
+
+    扩展：
+      不常用指令：v-else--和 v-if 与 v-else-if 配合使用
+  -->
+</div>
+
+</body>
+</html>
+
+
+<script>
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {},
+    methods: {}
+  })
+</script>

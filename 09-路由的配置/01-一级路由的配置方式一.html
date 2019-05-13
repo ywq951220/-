@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>一级路由的配置方式一</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+  <!-- 引入路由的库 vue-router.js -->
+  <script src="vue-router.js"></script>
+
+  <style>
+    li {
+      list-style-type: none;
+      display: inline-block;
+      margin: 20px 10px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .show {
+      width: 300px;
+      height: 200px;
+      background: #ccc;
+    }
+  </style>
+</head>
+<body>
+<!--
+  路由的作用
+    根据 URL 锚点路径，在容器中加载不同的模块
+
+  原理：利用锚点完成切换
+-->
+
+<div id="box">
+  <ul>
+    <li>
+      <!--<a href="#">home</a>-->
+      <router-link to="/home">home</router-link>
+    </li>
+    <li>
+      <!--<a href="#">news</a>-->
+      <router-link to="/news">news</router-link>
+    </li>
+    <li>
+      <!--<a href="#">hot</a>-->
+      <router-link to="/hot">hot</router-link>
+    </li>
+  </ul>
+  <div class="show">
+    <router-view></router-view>
+  </div>
+
+  <!--
+    使用路由去完成跳转，就不用在使用 a 标签了
+
+    使用<router-link></router-link>代替 a 标签
+
+    <router-link>：
+      在两对尖括号中添加文本
+      to 属性用来设置跳转的 url 地址
+      to = 路由配置时，routes数组中的 path 信息，需要填写在此处
+
+    router-view:
+      <router-view></router-view>用来占位
+  -->
+</div>
+
+<!--
+  一级路由的配置方法：
+    1、引入 vue-router.js 库
+
+-->
+</body>
+</html>
+
+
+<script>
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {},
+    beforeCreate() {
+      this.$router.push('/home')
+    },
+    //添加路由配置项
+    //router:路由实例(对象)
+    //router:new VueRouter()
+
+    //设置路由中的相关配置项
+    /*
+      router: new VueRouter({
+        路径信息：路径信息盛放在数组中
+        routes: [
+          {path:'url',component:'组件'}
+        ]
+      })
+    */
+    router: new VueRouter({
+      //路径信息：路径信息盛放在数组中
+      routes: [
+        //路径命名：'/+小写单词'
+        {
+          path: '/home',
+          component: {
+            template: '<h2>首页</h2>'
+          }
+        },
+        {
+          path: '/news',
+          component: {
+            template: '<h2>新闻</h2>'
+          }
+        },
+        {
+          path: '/hot',
+          component: {
+            template: '<h2>热点</h2>'
+          }
+        }
+      ]
+    }),
+    methods: {}
+  })
+</script>

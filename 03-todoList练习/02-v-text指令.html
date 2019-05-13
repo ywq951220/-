@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>v-text指令</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+</head>
+<body>
+<div id="box">
+  <h1>{{msg}}</h1>
+  <h1 v-text="msg"></h1>
+
+  <!--
+    v-text 指令：用来设置文本内容
+      语法：v-text=变量
+
+    v-text 指令相当于 innerHTML
+  -->
+</div>
+
+</body>
+</html>
+
+
+<script>
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {
+      msg:'hello!!!'
+    },
+    methods: {}
+  })
+</script>

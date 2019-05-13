@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>使用Swiper4实现图片的轮播</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+
+  <!-- 引入相应的库 -->
+  <link rel="stylesheet" href="swiper4/css/swiper.min.css"/>
+  <script src="swiper4/js/swiper.min.js"></script>
+
+  <style>
+    * {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .blue-slide {
+      background: blue;
+    }
+
+    .red-slide {
+      background: red;
+    }
+
+    .orange-slide {
+      background: orange;
+    }
+
+    .swiper-slide {
+      height: 300px;
+      line-height: 300px;
+      color: white;
+      font-size: 40px;
+      text-align: center;
+    }
+
+    .swiper-pagination-bullet-active { /*设置分页器*/
+      background: white;
+    }
+  </style>
+</head>
+<body>
+<!-- 搭建 HTML 结构 -->
+<div class="swiper-container">
+  <!-- 轮播图的主体内容 -->
+  <div class="swiper-wrapper">
+    <div class="swiper-slide blue-slide">Slide1</div>
+    <div class="swiper-slide red-slide">Slide2</div>
+    <div class="swiper-slide orange-slide">Slide3</div>
+  </div>
+
+  <!-- 分页器 -->
+  <div class="swiper-pagination"></div>
+
+  <!-- 如果需要导航按钮 -->
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+
+  <!-- 如果需要滚动条 -->
+  <div class="swiper-scrollbar"></div>
+</div>
+
+</body>
+</html>
+
+
+<script>
+
+  //swiper-container：第一个参数为外层容器选择器
+  var mySwiper = new Swiper('.swiper-container', {
+    // direction: 'vertical',//垂直切换选项
+    direction: 'horizontal',//水平切换选项
+    // speed: '400',//切换速度，即slider自动滑动开始到结束的时间(ms)
+    loop: true,//循环模式选项
+    pagination: {//分页器
+      el: '.swiper-pagination',//分页器类
+      type: 'fraction',//分页器样式
+    },
+    navigation: {//前进后退按钮
+      nextEl: 'swiper-button-next',
+      prevEl: 'swiper-button-prev'
+    },
+    scrollbar: {//滚动条
+      el: 'swiper-scrollbar'
+    },
+    // autoplay: true,//写法同下
+    autoplay: {
+      delay: 1000
+    },
+    // effect: 'coverflow',//切换效果
+  })
+</script>

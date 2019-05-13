@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>仿写百度搜索框</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+  <script src="vue-resource.js"></script>
+
+  <style>
+    .gray {
+      background: #ccc;
+    }
+  </style>
+</head>
+<body>
+<div id="box">
+  <input type="text" v-model="wd" @keydown.up.prevent="up()" @keydown.down="down()"/>
+  <button @click="search()">搜索</button>
+  <ul>
+    <li v-for="(item,index) in arr" :class="{gray: index == nowIndex}">{{item}}</li>
+  </ul>
+  <!--
+    所有的 li 都有自己的 index 值，可以定义一个 noeIndex 来记录当前被选中的下标，然后比较 index 和 nowIndex 的关系，
+    如果 index == nowIndex，那么该条数据是被选中的数据，也就是说背景变为灰色
+  -->
+</div>
+
+</body>
+</html>
+
+
+<script>
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {
+      arr: [],
+      wd: '',
+      nowIndex: -1
+    },
+    methods: {
+      search() {
+        this.$http.jsonp('https://sug.so.360.cn/suggest', {
+          params: {word: this.wd}
+        }).then(res => {
+          console.log(res.data)
+          console.log(res.data.s)
+          this.arr = res.data.s
+        })
+      },
+      up() {
+        this.nowIndex--
+        if (this.nowIndex < 0) this.nowIndex = this.arr.length - 1
+      },
+      down() {
+        this.nowIndex++
+        if (this.nowIndex > this.arr.length - 1) {
+          this.nowIndex = -1
+        }
+      }
+    }
+  })
+</script>

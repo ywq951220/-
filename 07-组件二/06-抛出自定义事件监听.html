@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>抛出自定义事件 监听</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+</head>
+<body>
+<div id="box">
+  <parent></parent>
+</div>
+
+<!--
+  语法：this.$emit('event',val)
+    event：表示自定义事件的名称
+    val：通过自定义事件传递的值
+  注意：val为可选参数
+
+  $emit：实例方法，用来触发事件监听
+-->
+<template id="p">
+  <div>
+    <h1>parent---{{pMsg}}</h1>
+    <child1 @change="getVal" parentMessage="parent"></child1>
+    <!-- 注意：接收事件的监听处的方法名后面不写小括号 -->
+  </div>
+</template>
+
+<template id="c1">
+  <div @click="fn">
+    <p>child1---{{c1Msg}}</p>
+    <h3></h3>
+  </div>
+</template>
+
+<template id="c2">
+  <div>
+    <p>child2---{{}}</p>
+  </div>
+</template>
+
+<!--
+  子组件向父组件的传值：子组件将值传递给父组件叫做逆向传值。需要借助自定义事件进行触发
+
+  父组件将值传递给子组件叫做正向传值
+
+  注意：vue.js 中时允许正向传值的，所以正向 传值不需要条件触发，是主动的；逆向传值是不允许的，
+    需要主动触发(主动抛出自定义事件监听)
+
+  希望从外部得到值：props:[]
+
+  注意：事件触发及接受原则：谁触发的原则，就由谁接受监听
+-->
+</body>
+</html>
+
+
+<script>
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {},
+    components: {
+      'parent': {
+        template: '#p',
+        data() {
+          return {
+            pMsg: 'pMessage',
+            message: ''
+          }
+        },
+        methods: {
+          getVal(val) {
+            //val 表示传递过来的值
+            console.log('val:' + val)
+            this.message = val
+            console.log('message:' + this.message)
+          }
+        },
+        components: {
+          'child1': {
+            template: '#c1',
+            data() {
+              return {
+                c1Msg: 'c1Message'
+              }
+            },
+            props: ['parentMessage'],
+            methods: {
+              fn() {
+                console.log(1)
+                //自定义事件
+                //触发自定义事件：$emit('自定义事件名称',传递的值)
+                this.$emit('change', this.c1Msg)
+                console.log('parent:' + this.parentMessage)
+              }
+            }
+          },
+          'child2': {
+            template: '#c2'
+          }
+        }
+      }
+    },
+    methods: {}
+  })
+</script>

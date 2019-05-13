@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>title</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+
+
+  <style type="text/css">
+    #box {
+      width: 350px;
+      margin: 30px auto;
+      background-color: #eee;
+      padding: 30px 50px;
+    }
+
+    li {
+      list-style-type: none;
+    }
+
+    ul {
+      padding-left: 0px;
+    }
+
+    .add {
+      width: 200px;
+      height: 20px;
+      margin-right: 10px;
+    }
+
+    .span1 {
+      color: skyblue;
+    }
+
+    .finish {
+      color: #ccc;
+      text-decoration: line-through;
+    }
+
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<div id="box" v-cloak>
+  <!--
+     v-cloak指令：可以防止数据在加载速度慢的时候，页面闪出‘{{}}’
+
+       使用方法：v-cloak指令后面不写表达式。
+         在style中：[v-cloak]{display:none}
+         隐藏元素，直到页面中的数据加载完成
+   -->
+  <h1>任务列表</h1>
+  <p>任务总数：{{arr.length}}；还有：{{choose()}}条未完成；[<span class="span1" @click="finish()">完成</span>]</p>
+  <ul>
+    <li v-for="(item,index) in arr" v-bind:class="{finish:item.bol}">
+      <input type="checkbox" v-model="item.bol"/>
+      <span v-text="item.des" v-show="!item.edit" @click="edit(index)"></span>
+      <input type="text" v-model="item.des" v-show="item.edit" @blur="item.edit=false"/>
+      <!--
+        @事件名称='函数/简单的js代码'
+      -->
+    </li>
+  </ul>
+  <input type="text" class="add" v-model="msg"/>
+  <button @click="add">添加</button>
+</div>
+
+
+</body>
+</html>
+
+
+<script type="text/javascript">
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {
+      arr: [
+        //每条数据中应该有数据的内容和数据的状态和编辑的状态
+        {des: '设计', bol: false, edit: false},
+        {des: '编写页面代码', bol: false, edit: false},
+        {des: '编写js代码', bol: false, edit: false},
+        {des: '设计产品原型', bol: false, edit: false}
+      ],
+      msg: ''
+    },
+    methods: {
+      add() {
+        this.arr.push({des: this.msg, bol: false})
+        this.msg = ''
+      },
+      choose() {
+        //对所有数组中的元素进行遍历，查看bol，如果bol为false表示未完成的，如果bol为true表示已完成的
+        let num = 0
+        this.arr.forEach(item => {
+          if (!item.bol) {//当前任务未完成
+            //增加未完成的数量
+            num++
+          }
+        })
+        return num
+      },
+      finish() {
+        //对所有数据进行遍历，如果已完成，则将其删除掉
+
+        //先将 arr 中的数据存放到一个临时变量中，然后将 arr 清空，在进行遍历，将未完成的数据重新添加进来
+        let temp = this.arr//在清空arr之前将arr中的数据保存到临时变量中
+        this.arr = []
+        for (let i = 0; i < temp.length; i++) {
+          if (!temp[i].bol) {
+            this.arr.push(temp[i])
+          }
+        }
+      },
+      edit(index) {
+        //首先判断当前的数据是否为已完成，如果是已完成的状态则不能对数据进行修改，如果是未完成的数据，则可以进行修改
+        if (this.arr[index].bol) {
+          return
+        }
+
+        //将edit的值改为true
+        this.arr[index].edit = true
+      }
+    }
+  })
+</script>

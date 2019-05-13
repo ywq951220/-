@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>一级路由的配置方式二</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+  <!-- 引入路由的库 vue-router.js -->
+  <script src="vue-router.js"></script>
+
+  <style>
+    li {
+      list-style-type: none;
+      display: inline-block;
+      margin: 10px 5px;
+    }
+
+    .show {
+      width: 300px;
+      height: 200px;
+      background: #eee;
+    }
+  </style>
+</head>
+<body>
+<div id="box">
+  <div class="show">
+    <!-- 用来进行占位 -->
+    <router-view></router-view>
+  </div>
+  <ul>
+    <li>
+      <!-- 相当于 a 链接，to 用来设置路径信息，相当于 href -->
+      <router-link to="/home">home</router-link>
+    </li>
+    <li>
+      <router-link to="/news">news</router-link>
+    </li>
+    <li>
+      <router-link to="/hot">hot</router-link>
+    </li>
+  </ul>
+</div>
+
+<template id="home">
+  <div>
+    <h2>首页</h2>
+    <ul>
+      <li>今日热点</li>
+      <li>体育新闻</li>
+      <li>关爱八卦成长协会</li>
+    </ul>
+  </div>
+</template>
+
+<!-- news 的二级目录模板 -->
+<template id="news">
+  <div>
+    <h1>新闻</h1>
+    <router-link to="/news/film">film</router-link>
+    <router-link to="/news/tv">tv</router-link>
+    <router-view></router-view>
+  </div>
+</template>
+
+</body>
+</html>
+
+
+<script>
+  //1.准备路由所需的模块(组件)
+  //全局Vue下，有extend()方法，用来注册路由所需的模块(组件)
+  //模块名称首字母大写
+  var Home = Vue.extend({
+    template: '#home'
+  })
+  var News = Vue.extend({
+    template: '#news'
+  })
+  var Hot = Vue.extend({
+    template: '<h2>热点</h2>'
+  })
+
+  //2.配置路径信息
+  var routes = [
+    // {path:'url',component:组件名称}
+    {path: '/home', component: Home},
+    //二级路由的配置
+    //配置二级路由的路径信息
+    //children:[{path:'url',component:'组件'}...]
+    {
+      path: '/news',
+      component: News,
+      //二级路由中 path 分配前面不能有 /
+      children: [
+        {
+          path: 'film', component: {
+            template: '<p>电影：绣春刀，战狼2</p>'
+          }
+        },
+        {
+          path: 'tv', component: {
+            template: '<p>春分十里不如你，信号</p>'
+          }
+        },
+        {
+          path: '', component: {
+            template: '<p>电影：绣春刀，战狼2</p>'
+          }
+        }
+      ]
+    },
+    {path: '/hot', component: Hot}
+  ]
+
+  //3.创建一个路由对象
+  var router = new VueRouter({
+    // routes: arr
+    routes
+  })
+
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {},
+    beforeCreate() {
+      this.$router.push('/home')
+    },
+    // router: router,
+    router,
+    methods:
+      {}
+  })
+</script>

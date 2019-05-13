@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>父子组件</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum=1.0,user-scalable=0"/>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .tabbarWrap {
+      width: 100%;
+      height: 64px;
+      border-top: 1px solid #ccc;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+    }
+
+    .itemWrap {
+      width: 20%;
+      float: left;
+      text-align: center;
+    }
+
+    .itemWrap img {
+      width: 45px;
+    }
+
+    .tabbarWrap span {
+      font-size: 12px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+<div id="box">
+  <tabbar></tabbar>
+</div>
+
+<template id="t">
+  <div class="tabbarWrap">
+    <item txt="首页">
+      <img src="img/1.png"/>
+    </item>
+    <item txt="书影城">
+      <img src="img/2.png"/>
+    </item>
+    <item txt="广播">
+      <img src="img/3.png"/>
+    </item>
+    <item txt="小组">
+      <img src="img/4.png"/>
+    </item>
+    <item txt="我的">
+      <img src="img/5.png"/>
+    </item>
+  </div>
+</template>
+
+<template id="i">
+  <div class="itemWrap">
+    <slot></slot>
+    <br/>
+    <span>{{txt}}</span>
+  </div>
+</template>
+
+<!--
+  组件：每个组件相当于一个完整的实例，拥有绝大多数 vm 实例的配置项
+
+  子组件的调用：只能在父组件的模板中调用
+-->
+</body>
+</html>
+
+
+<script>
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {},
+    //父组件
+    components: {
+      'tabbar': {
+        template: '#t',
+        //子组件
+        components: {
+          'item': {
+            template: '#i',
+            props: ['txt']
+          }
+        }
+      }
+    },
+    methods: {}
+  })
+</script>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>props父子组件之间的传值</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+</head>
+<body>
+<div id="box">
+  <parent></parent>
+</div>
+
+</body>
+</html>
+
+
+<script>
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {},
+    components: {
+      'parent': {
+        template: '<div><h1>这是parent</h1><child :message="msg"></child></div>',
+        data() {
+          return {
+            msg: 'p'
+          }
+        },
+        components: {
+          'child': {
+            template: '<span>这是child---{{message}}</span>',
+            props: ['message']
+          }
+        }
+      }
+    },
+    methods: {}
+  })
+</script>

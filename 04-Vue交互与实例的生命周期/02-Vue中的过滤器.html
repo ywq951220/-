@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue中的过滤器</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+</head>
+<body>
+<!--
+  vue中的过滤器
+    作用：在不改变数据的情况下，输出前端需要的格式数据
+
+    过滤器的定义方法：
+      Vue.filter('sum',function(val){
+        return val + 4
+      })
+      注意：
+        sum：第一个参数表示过滤器的名称
+        第二个参数是一个函数，表示处理过滤器的方法。传入的参数为过滤的数据，return的数据为最终返回到页面上的数据
+
+    过滤器的调用：数据 | 过滤器名称
+
+
+    注意：
+      定义过滤器的注意事项：
+        --定义过滤器时，必须放在Vue实例的前面(即在 [new Vue({})]之前定义)
+        --在没有冲突的前提下，过滤器可以串联使用
+-->
+<div id="box">
+  <h1>{{lily | hello | currency}}</h1>
+</div>
+
+</body>
+</html>
+
+
+<script>
+  //定义过滤器的位置：创建实例之前
+  /*
+  * Vue.filter('过滤器的名称',function(val){
+  *   val：需要处理的值
+  *   逻辑代码
+  *   return 处理后的数据
+  * })
+  * */
+
+  //过滤器的调用：数据 | 过滤器的名称
+  Vue.filter('hello', function (val) {
+    return 'hello' + val
+  })
+  Vue.filter('currency', function (val) {
+    return '￥￥￥' + val
+  })
+
+
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {
+      name:'lily'
+    },
+    methods: {}
+  })
+</script>

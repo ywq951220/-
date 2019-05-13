@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>v-for指令</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+
+  <style>
+    .red {
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+<div id="box">
+  <!--
+    v-for 指令：类似于 JS 中的 for 循环
+
+      作用：遍历 data 中的数据，并在页面记性数据的展示
+
+      语法：v-for='(item,index) in arr'
+
+      注意：item 和 index 名字是随便取的(参数1,参数2)
+        参数1：每次遍历后得到的元素(跟它叫什么名字无关，只跟参数的顺序有关)
+        参数2：每个元素的下标(跟它叫什么名族无关，只跟参数的顺序有关)
+
+        item：每次遍历后得到的元素
+        index：表示每次循环的下标
+        arr：需要遍历的数组
+
+
+  -->
+
+  <ul>
+    <!-- 有多少条数据，就渲染(render)多少个 li -->
+    <!--<li v-for="item in arr">{{item}}</li>-->
+    <li v-for="(item,index) in arr" @click="fn(index)" v-bind:class='{red:item.bol}'>{{index}}--{{item.des}}</li>
+  </ul>
+
+  <!--
+    点击 li，让被点击的 li 的背景变为红色
+  -->
+</div>
+
+</body>
+</html>
+
+
+<script>
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {
+      arr: [
+        {des: '睡觉', bol: false},
+        {des: '吃饭', bol: false},
+        {des: '上班', bol: false},
+        {des: '旅游', bol: false}
+      ]
+    },
+    methods: {
+      fn: function (index) {
+        //通过 i 知道当前被点击的是谁，把被点击的数据的 bol 改为 true，把所有其他未被点击的数据的 bol 改为 false
+
+        //思路：先都改为 false，然后在把选中的改为 true
+        for (var i = 0; i < this.arr.length; i++) {
+          this.arr[i].bol = false
+        }
+        this.arr[index] = true
+      }
+    }
+  })
+</script>

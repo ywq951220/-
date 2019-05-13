@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>事件的执行机制</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+
+  <script src="vue-resource.js"></script>
+
+  <style>
+    div {
+      width: 100px;
+      height: 100px;
+    }
+
+    .div1 {
+      background: pink;
+      padding: 50px;
+    }
+
+    .div2 {
+      background: yellow;
+    }
+  </style>
+</head>
+<body>
+<div id="box">
+  <div class="div1" @click="fn1()">
+    <div class="div2" @click.stop="fn2()"></div>
+  </div>
+</div>
+
+<!--
+  事件执行机制：
+    根元素 ==> 元素1 ==> 元素2 ==> 事件源(target)
+    注意：先捕获，后冒泡
+    捕获：从根元素 到 事件源
+    冒泡：从事件源 到 根元素
+-->
+
+
+</body>
+</html>
+
+
+<script>
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {},
+    methods: {
+      fn1() {
+        console.log('fn1')
+      },
+      fn2() {
+        console.log('fn2')
+      }
+    }
+  })
+</script>

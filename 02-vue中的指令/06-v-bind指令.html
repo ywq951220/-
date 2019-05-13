@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>v-bind指令</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+
+  <style>
+    .red {
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+<div id="box">
+  <!--<button class="red">button</button>-->
+  <button v-bind:class="{red:false}">button</button>
+
+  <!--
+    v-bind指令的属性绑定：
+
+      v-bind:class={类名:表达式}
+  -->
+</div>
+
+</body>
+</html>
+
+
+<script>
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {},
+    methods: {}
+  })
+</script>

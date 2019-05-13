@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>使用Swiper3实现图片的轮播</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+
+  <!-- 引入相应的库 -->
+  <link rel="stylesheet" type="text/css" href="swiper3/css/swiper.css"/>
+  <script type="text/javascript" src="swiper3/js/swiper.js"></script>
+
+  <style>
+    * {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .blue-slide {
+      background: blue;
+    }
+
+    .red-slide {
+      background: red;
+    }
+
+    .orange-slide {
+      background: orange;
+    }
+
+    .swiper-slide {
+      line-height: 300px;
+      color: white;
+      font-size: 40px;
+      text-align: center;
+    }
+
+    .swiper-pagination-bullet-active {
+      background: white;
+    }
+  </style>
+</head>
+<body>
+<!-- 搭建 HTML 结构 -->
+<div class="swiper-container">
+  <!-- 轮播图的主体内容 -->
+  <div class="swiper-wrapper">
+    <div class="swiper-slide blue-slide">slide1</div>
+    <div class="swiper-slide red-slide">slide2</div>
+    <div class="swiper-slide orange-slide">slide3</div>
+  </div>
+
+  <!-- 分页器 -->
+  <div class="swiper-pagination"></div>
+</div>
+
+</body>
+</html>
+
+
+<script>
+  //创建 swiper3 对象
+  var mySwiper = new Swiper('.swiper-container', {
+    loop: true,//轮播
+    autoplay: 10,//每隔多长时间播放一次，取值为毫秒值
+    pagination: '.swiper-pagination',//有分页器
+  })
+</script>

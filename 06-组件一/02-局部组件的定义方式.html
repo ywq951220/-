@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>局部组件的定义方式</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+  <script src="vue-resource.js"></script>
+</head>
+<body>
+<div id="box">
+  <!--
+    调用组件
+       <组件名></组件名>
+  -->
+  <name></name>
+  <name></name>
+
+  <name2></name2>
+
+  <!-- 会报错 -->
+  <!--<myName></myName>-->
+  <my-name></my-name>
+</div>
+
+<div id="box2">
+  <name></name>
+</div>
+
+<!-- 定义局部组件的模板 -->
+<template id="t">
+  <div>
+    <img src="img/1_175533_1.jpg" style="width: 150px;height: 100px" @click="fn()"/>
+    <ul>
+      <li>111</li>
+      <li>222</li>
+      <li>333</li>
+    </ul>
+    <h1>这是***第一个***局部组件</h1>
+    <h2>{{msg}}---{{a}}</h2>
+  </div>
+</template>
+
+</body>
+</html>
+
+
+<script>
+
+  //局部组件的作用域：在哪个实例里面进行定义，就只能在对应关联的容器中进行调用
+
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {},
+    //局部组件的定义
+    components: {
+      // '组件名称':{配置项}
+      'name': {
+        // template: '<h1>这是***第一个***局部组件</h1>'
+        template: '#t',
+        data() {
+          return {
+            msg: 'Hello',
+            a: 100
+          }
+        },
+        methods: {
+          fn() {
+            console.log('1')
+          }
+        }
+      },
+      'name2': {
+        template: '<h1>这是***第二个***局部组件</h1>'
+      },
+      //如果组件命名使用驼峰命名法，那么在调用时需要用 - 连接的方式替代驼峰
+      'myName': {
+        template: '<h1>这是***第三个***局部组件</h1>'
+      }
+      //每一个组件相当于完整的Vue实例，所以组件之间的作用域是完全独立的，组件之间的值不能共用
+    },
+    methods: {}
+  })
+
+
+  var vm2 = new Vue({
+    el: '#box2',
+    data: {
+
+    }
+  })
+</script>

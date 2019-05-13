@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>仿写留言板</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+  <script src="vue-resource.js"></script>
+</head>
+<body>
+<div id="box">
+  <!--<button @click="search()">显示评论</button>-->
+  <button>显示评论</button>
+  <ul>
+    <li v-for="item in arr">
+      <h4>{{item.commentTxt}}</h4>
+      <span>{{item.createAt | time}}</span>
+    </li>
+  </ul>
+</div>
+
+</body>
+</html>
+
+
+<script>
+  //过滤器定义
+  Vue.filter('time', function (val) {
+    //只显示日期不显示时间，则需进行字符串的截取(substr())
+    return val.substr(0, 10)
+  })
+
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {
+      arr: []
+    },
+    //钩子函数的设置位置：与data、methods等同级设置
+    beforeCreate: function () {
+      this.$http.get('http://api.artgoer.cn:8084/artgoer/api/v1/user/324380/v3/topic/topicHomeByLabel?pageIndex=1&token=b544cd63-6d42-46fe-a96c-3cf96bae3113&topicId=62187').then(res => {
+        //then中如果之传入一个处理函数，那么默认时处理请求成功的情况
+        console.log(res.data)
+        console.log(res.data.data)
+        console.log(res.data.data.commentList)
+        this.arr = res.data.data.commentList
+      })
+    },
+    methods: {
+      // search() {
+      //   this.$http.get('http://api.artgoer.cn:8084/artgoer/api/v1/user/324380/v3/topic/topicHomeByLabel?pageIndex=1&token=b544cd63-6d42-46fe-a96c-3cf96bae3113&topicId=62187').then(res => {
+      //     //then中如果之传入一个处理函数，那么默认时处理请求成功的情况
+      //     console.log(res.data)
+      //     console.log(res.data.data)
+      //     console.log(res.data.data.commentList)
+      //     this.arr = res.data.data.commentList
+      //   })
+      // }
+    }
+  })
+
+  /*
+   * 实例生命周期：实例在创建和销毁的过程
+   *   create(创建)：beforeCreate(进行数据的加载，data数据为undefined)、created(data数据都已经加载完成)。
+   *   mount(挂载)：beforeMount、mounted
+   *   update(更新)：beforeUpdate、updated
+   *   destroy(销毁)：beforeDestroy、destroyed
+   *
+   * 钩子函数的作用：在实例的生命周期中为我们提供自定义逻辑的机会
+   */
+</script>

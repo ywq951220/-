@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>全局组件的定义方式</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+
+  <script src="vue-resource.js"></script>
+</head>
+<body>
+<div id="box">
+  <!--
+    组件的定义：<组件名></组件名>
+  -->
+  <name></name>
+  <name></name>
+</div>
+
+<div id="box2">
+  <p>----box2----</p>
+  <name></name>
+</div>
+
+
+<!--
+  定义模板：使用 template 标签在 box 容器外定义模板，为 template 标签添加 id，设置 template 配置项。template:'selector'
+-->
+<template id="t">
+  <div>
+    <!-- 在模板中添加事件 -->
+    <img src="img/1_175533_1.jpg" @click="fn()"/>
+    <ul>
+      <li>111</li>
+      <li>222</li>
+      <li>333</li>
+    </ul>
+    <h1>组件中的h1标签</h1>
+    <h2>{{msg + '----' + name}}</h2>
+  </div>
+</template>
+
+</body>
+</html>
+
+
+<script>
+
+  //全局组件
+
+  //组件的封装
+  //Vue.component('name',{template:'html结构'})
+  //如果想在HTML结构中写入多个标签，外层必须包裹容器(即必须有唯一的根元素)
+
+  Vue.component('name', {
+    //模板
+    // template: '<div><h1>这是全局定义组件中的h1标签</h1><p>这是全局定义组件中的p标签</p></div>'
+    template: '#t',
+    //组件中定义数据：data(){return{a:1,b:2,...}}
+    data() {
+      return {
+        msg: 'hello',
+        name: 'lily'
+      }
+    }, methods: {
+      fn() {
+        console.log('1')
+      }
+    }
+  })
+
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {},
+    methods: {}
+  })
+
+  var vm2 = new Vue({
+    el: '#box2',
+    data: {},
+    methods: {}
+  })
+</script>

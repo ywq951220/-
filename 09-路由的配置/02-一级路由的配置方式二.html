@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>一级路由的配置方式二</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+  <!-- 引入路由的库 vue-router.js -->
+  <script src="vue-router.js"></script>
+
+  <style>
+    li {
+      list-style-type: none;
+      display: inline-block;
+      margin: 10px 5px;
+    }
+
+    .show {
+      width: 300px;
+      height: 200px;
+      background: #eee;
+    }
+  </style>
+</head>
+<body>
+<div id="box">
+  <ul>
+    <li>
+      <!-- 相当于 a 链接，to 用来设置路径信息，相当于 href -->
+      <router-link to="/home">home</router-link>
+    </li>
+    <li>
+      <router-link to="/news">news</router-link>
+    </li>
+    <li>
+      <router-link to="/hot">hot</router-link>
+    </li>
+  </ul>
+  <div class="show">
+    <!-- 用来进行占位 -->
+    <router-view></router-view>
+  </div>
+</div>
+
+<template id="home">
+  <div>
+    <h2>首页</h2>
+    <ul>
+      <li>今日热点</li>
+      <li>体育新闻</li>
+      <li>关爱八卦成长协会</li>
+    </ul>
+  </div>
+</template>
+
+<!--
+  总结：
+    路由的配置步骤：
+      1、引入 vue-router.js 库
+      2、准备路由模块
+      3、配置路由路径
+      4、添加路由配置项
+      5、更改 HTML 结构
+        --使用<router-link></router-link>标签替代 a 标签
+        --添加<router-view></router-view>标签进行占位
+-->
+</body>
+</html>
+
+
+<script>
+  //1.准备路由所需的模块(组件)
+  //全局Vue下，有extend()方法，用来注册路由所需的模块(组件)
+  //模块名称首字母大写
+  var Home = Vue.extend({
+    template: '#home'
+  })
+  var News = Vue.extend({
+    template: '<h2>新闻</h2>'
+  })
+  var Hot = Vue.extend({
+    template: '<h2>热点</h2>'
+  })
+
+  //2.配置路径信息
+  var routes = [
+    // {path:'url',component:组件名称}
+    {path: '/home', component: Home},
+    {path: '/news', component: News},
+    {path: '/hot', component: Hot}
+  ]
+
+  //3.创建一个路由对象
+  var router = new VueRouter({
+    //配置项
+    //routes:存储路径信息的数组
+    // routes: arr
+    //ES6 中用的新语法：如果配置项的名称与后方配置项名称相同，可以简写
+    routes
+  })
+
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {},
+    beforeCreate() {
+      this.$router.push('/home')
+    },
+    //添加路由配置项
+    //router:路由对象
+    // router: router,
+    router,
+    methods:
+      {}
+  })
+
+  //路由的重定向方式一
+  //push()：路由对象自带的方法，进行路径的跳转 push('url')
+  // router.push('/home')
+</script>

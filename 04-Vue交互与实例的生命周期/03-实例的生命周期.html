@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>实例的生命周期</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+</head>
+<body>
+<!--
+  1、什么是实例的生命周期：实例在被创建前经过的一系列的初始化的过程叫做生命周期
+
+  2、什么是生命周期钩子：在生命周期中被自动调用的函数叫做生命周期的钩子函数
+    作用：我们可以利用钩子函数来定义自己的一些逻辑
+
+    生命周期：
+      create(创建)：
+        beforeCreate：在该生命周期执行的时候，data 和 methods 中的数据都还没有被初始化
+        created：在该生命周期执行的时候，data 和 methods 中的数据都都已经被初始化好了
+          注意：如果调用 methods 中的方法或者操作 data 中的数据，最早只能在 created 中操作
+      mount(挂载)：
+        beforeMount：
+        mounted：
+      update(更新)：
+        beforeUpdate：
+        updated：
+      destroy(销毁)：
+        beforeDestroy：
+        destroyed：
+
+  3、生命周期钩子的用途：为我们提供执行自定义逻辑的机会
+
+  4、有哪些钩子函数：
+    beforeCreate、created、beforeMount、mounted、beforeUpdate、updated、beforeDestroy、destroyed
+-->
+<div id="box">
+  <h1>{{msg}}</h1>
+</div>
+
+</body>
+</html>
+
+
+<script>
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {
+      msg: 'hello'
+    },
+    methods: {},
+    //钩子函数书写的位置和data、methods等同级书写
+    beforeCreate: function () {
+      console.group('beforeCreate...........')
+      console.log('el:' + this.$el)//$el为实例自带的属性
+      console.log('data:' + this.$data)
+      console.log('msg:' + this.msg)
+      //三者都没有创建
+    },
+    created: function () {
+      console.group('created...........')
+      console.log('el:' + this.$el)//$el为实例自带的属性
+      console.log('data:' + this.$data)
+      console.log('msg:' + this.msg)
+      //el没有创建、data和msg已经被创建
+    },
+    beforeMount: function () {
+      console.group('beforeMount...........')
+      console.log('el:' + this.$el)//$el为实例自带的属性
+      console.log('data:' + this.$data)
+      console.log('msg:' + this.msg)
+      //el并没有真正的创建出来，而是进行了一个占位、data和msg已经被创建
+    },
+    mounted: function () {
+      console.group('mounted...........')
+      console.log('el:' + this.$el)//$el为实例自带的属性
+      console.log('data:' + this.$data)
+      console.log('msg:' + this.msg)
+      //el已经替换成了真正的数据、data和msg已经被创建
+    },
+    //el是用来设置挂载的。el:'selector'。selector用来将容器和数据进行关联，关联的这个过程叫做挂载
+
+    beforeUpdate: function () {
+      console.group('beforeUpdate...........')
+      console.log('el:' + this.$el)//$el为实例自带的属性
+      console.log('data:' + this.$data)
+      console.log('msg:' + this.msg)
+    },
+    updated: function () {
+      console.group('updated...........')
+      console.log('el:' + this.$el)//$el为实例自带的属性
+      console.log('data:' + this.$data)
+      console.log('msg:' + this.msg)
+    },
+    //数据更新后，beforeUpdate和updated方法才会执行
+
+    beforeDestroy: function () {
+      console.group('beforeDestroy...........')
+      console.log('el:' + this.$el)//$el为实例自带的属性
+      console.log('data:' + this.$data)
+      console.log('msg:' + this.msg)
+    },
+    destroyed: function () {
+      console.group('destroyed...........')
+      console.log('el:' + this.$el)//$el为实例自带的属性
+      console.log('data:' + this.$data)
+      console.log('msg:' + this.msg)
+    }
+    //destroy在实例销毁的时候执行，实例销毁后，其身上的所有数据和方法都会销毁，不在生效
+  })
+</script>

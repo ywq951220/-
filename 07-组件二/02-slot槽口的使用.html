@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>slot槽口的使用</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+</head>
+<body>
+<div id="box">
+  <test>我是插入的内容</test>
+</div>
+
+<!-- 组件模板 test -->
+<template id="t">
+  <div class="testWrap">
+    <h1>test</h1>
+    <slot></slot>
+  </div>
+</template>
+
+<!--
+  slot(槽口)：指的是在组件封装的过程中向外部留出槽口，也就是可供外部插入一些内容
+    语法：<slot></slot>
+
+  具名槽口：<slot name='img1'></slot>
+    匹配：<img src='' slot='img1'/>
+-->
+</body>
+</html>
+
+
+<script>
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {},
+    components: {
+      'test': {
+        template: '#t'
+      }
+    },
+    methods: {}
+  })
+</script>

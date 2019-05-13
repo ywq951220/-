@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>项目环境的配置</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+</head>
+<body>
+<div id="box"></div>
+
+<!--
+  安装完node.js之后使用(node -v)查看 node.js 是否安装成功
+
+  安装 vue-cli(脚手架)：npm(指令) install -g(全局安装) vue-cli
+  安装webpack：npm install webpack -g
+  创建项目：vue init webpack my-vue
+  切换到所创建的项目目录下：cd my-vue
+  安装axios：npm install axios
+  安装启动模式：npm install(用来启动项目)
+  启动项目：npm run dev
+
+  创建项目目录分析：
+    --build中配置了webpack的基本配置，开发环境配置、生产环境配置
+    --config中配置了路径端口值
+    --node_modules为依赖的模块
+    --src为放置组件和入口文件
+    --static放置静态资源文件
+    --index.html文件的入口
+
+  小结：
+    扩展：cnpm安装：npm install -g cnpm -registry=https://registry.npm.taobao.org
+-->
+
+</body>
+</html>
+
+
+<script>
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {},
+    methods: {}
+  })
+</script>

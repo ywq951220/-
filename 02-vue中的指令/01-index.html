@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>index.html</title>
+  <!-- 引入 Vue 库 -->
+  <script src="vue.js"></script>
+
+  <style>
+    .div1 {
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+<!-- view -->
+<div id="box">
+  <button @click="fn()">toggle</button>
+  <div class="div1" v-show="bol"></div>
+  <!--
+    v-show 指令
+      语法： v-show=表达式
+      表达式的结果为 true，那么显示元素
+      表达式的结果为 false，那么隐藏元素
+
+   v-on 指令
+     --作用：为HTML
+  -->
+</div>
+</body>
+</html>
+
+
+<script>
+  //控制器
+  var vm = new Vue({
+    el: '#box',
+    data: {
+      //数据
+      bol: true
+    },
+    methods: {
+      fn() {
+        // console.log(1);
+        this.bol = !this.bol
+        console.log(this.bol)
+      }
+    }
+  })
+</script>

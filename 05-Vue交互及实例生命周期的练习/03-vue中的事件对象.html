@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue中的事件对象</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+
+  <script src="vue-resource.js"></script>
+
+  <style>
+    .div1 {
+      width: 100px;
+      height: 100px;
+      background: red;
+    }
+  </style>
+</head>
+<body>
+<div id="box">
+  <div class="div1" @click="fn1($event)"></div>
+  <input type="text" @keydown="fn2($event)"/>
+  <!-- @keydown事件：键盘被按下的时候就执行 -->
+  <!--<input type="text" @keydown.up="fn3()" @keydown.down="fn4()"/>-->
+  <!-- @keyup事件：键盘被按下松开之后才执行 -->
+  <input type="text" @keyup.up="fn3()" @keyup.down="fn4()"/>
+</div>
+
+<!--
+  Vue中的事件对象的获取：
+    @click=fn($event)
+    注意：$event：表示事件对象
+
+  事件修饰符：Vue中提供的处理DOM事件细节的方式
+
+    按键修饰符：.up、.down、.ctrl、.enter、.space ...
+    语法：@click.修饰符='fn()'
+
+  stop：阻止冒泡
+
+  prevent：阻止默认行为
+    注意：修饰符可以串联使用：连缀点
+-->
+
+</body>
+</html>
+
+
+<script>
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {},
+    methods: {
+      fn1(e) {
+        console.log(e)
+      },
+      fn2(e) {
+        console.log(e)
+        console.log(e.keyCode)
+        if (e.keyCode == 38) {
+          console.log('up')
+        } else if (e.keyCode == 40) {
+          console.log('down')
+        }
+      },
+      fn3() {
+        console.log('up')
+      },
+      fn4() {
+        console.log('down')
+      }
+    }
+  })
+</script>

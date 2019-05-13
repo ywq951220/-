@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>路由的传参</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+  <script src="vue-router.js"></script>
+
+  <style>
+    .show {
+      width: 300px;
+      height: 200px;
+      background: #eee;
+    }
+  </style>
+</head>
+<body>
+<div id="box">
+  <p>
+    <router-link to="/home">home</router-link>
+    <router-link to="/news">news</router-link>
+  </p>
+  <div class="show">
+    <router-view></router-view>
+  </div>
+</div>
+
+<template id="home">
+  <div>
+    <h2>首页</h2>
+  </div>
+</template>
+<template id="news">
+  <div>
+    <h2>新闻</h2>
+    <ul>
+      <li>
+        <!-- 0、1、2代表需要传递过去的参数 -->
+        <router-link to="/news/0">新闻000</router-link>
+      </li>
+      <li>
+        <router-link to="/news/1">新闻001</router-link>
+      </li>
+      <li>
+        <router-link to="/news/2">新闻002</router-link>
+      </li>
+      <!--
+        传递参数：通过点击不同的 router-link 进行传递，将二级的路径信息进行传递
+      -->
+    </ul>
+  </div>
+</template>
+<template id="nd">
+  <div>
+    <p>新闻详情页</p>
+    <!-- 接收参数：$route.params.id -->
+    <span>这是传递过来的参数：{{$route.params.id}}</span>
+    <span>{{ arr[$route.params.id] }}</span>
+  </div>
+</template>
+</body>
+</html>
+
+
+<script>
+  var Home = Vue.extend({
+    template: '#home'
+  })
+  var News = Vue.extend({
+    template: '#news'
+  })
+  var NewsDetail = Vue.extend({
+    template: '#nd',
+    data() {
+      return {
+        arr: ['绣春刀', '战狼2', '大护法']
+      }
+    }
+  })
+
+  var routes = [
+    {path: '/home', component: Home},
+    {path: '/news', component: News},
+    //要想显示新闻详情页，需要为新闻详情页配置路径信息
+    //二级路径/:id
+    {path: '/news/:id', component: NewsDetail}
+  ]
+
+  var router = new VueRouter({
+    routes
+  })
+
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {},
+    router,
+    methods: {}
+  })
+
+  router.push('/home')
+</script>
