@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>理解版本控制</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="vue.js"></script>
+</head>
+<body>
+<div id="box">
+
+  <!--
+    配置提交作者：
+       git config --global user.name "username"  ==>配置姓名
+       git config --global user.email "email"  ==>配置email地址
+
+    禁用换行符自动转换：
+       git config --global core.autocrlf false
+
+    从零开始，先创建远程库，然后克隆远程库：
+       git clone url [本地库名]
+
+    查看仓库文件状态：
+       git status
+
+    暂存文件，建立跟踪：
+       git add 具体文件(一个一个文件的暂存)
+       git add .(点表示把本地仓库下的文件全部暂存)
+
+    提交版本到本地仓库：
+       git commit -m "commit info"(双引号内的为提交的信息说明)
+
+    推送提交到远程仓库：
+       git push 远程仓库(origin) 远程分支(master)
+
+    解决版本冲突，拉去远程库的版本，合并到本地库(更新)
+       git pull 远程仓库(origin) 远程分支(master)
+
+
+
+    对于本地已经有的代码，初始化库：
+       git init
+
+    添加远程库：
+       git remote add origin 远程库的URL
+
+       git pull origin master(更新刚添加的远程库)
+
+       git add 文件：建立追踪(对本地文件进行追踪和暂存)
+
+       git commit -m "..."(提交)
+
+       git push -u origin master(提交最新的版本到远程库，-u：可以关联远程库)
+  -->
+
+</div>
+
+<!--
+  什么是版本控制
+
+  为何需要版本控制：
+    1、记录文件的所有历史变化
+    2、查看修改情况和责任人
+    3、错误恢复
+    4、共享数据。协作开发
+
+  VCS(Version Control System)
+    本地版本控制系统(LVCS、Local VCS)
+    集中式版本控制系统(CVCS、Centralized VCS)
+    分布式版本控制系统(DVCS、Distributed VCS)
+
+  Git：一个开源的分布式版本控制系统。GitHub和码云(Gitee)等使用Git作为版本控制工具使用作为版本工具的控制
+    官方网站：http://git-scm.com/
+
+  GitHub：http://github.com/
+
+  码云Gitee：
+    开源(www.oschina.net)社区团队推出的代码托管和协作开发平台
+    http://gitee.com/
+-->
+
+</body>
+</html>
+
+
+<script>
+  //创建Vue实例，得到 ViewModel
+  var vm = new Vue({
+    el: '#box',
+    data: {},
+    methods: {}
+  })
+</script>
